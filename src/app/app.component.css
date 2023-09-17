@@ -3,6 +3,10 @@
   background: seashell;
 }
 
+.row {
+  border: solid thin black;
+}
+
 p {
   color: cornflowerblue;
 }
