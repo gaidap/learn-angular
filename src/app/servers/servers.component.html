@@ -5,12 +5,33 @@
   [(ngModel)]="serverName"
   placeholder="{{ 'please enter server name...' }}"
 >
-<button
-  class="btn btn-primary"
-  [disabled]="!allowNewServer"
-  (click)="onCreateServer()"
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+      <button
+        class="btn btn-primary"
+        [disabled]="!allowNewServer"
+        (click)="onCreateServer()">
+        Add Server
+      </button>
+    </div>
+    <div class="col-md-2">
+      <button
+        class="btn btn-primary"
+        (click)="toggleDetails()"
+      >
+        Display Details
+      </button>
+    </div>
+  </div>
+</div>
+
+<p *ngIf="!hideDetails">{{ 'Angular Rocks' }}</p>
+<li
+  *ngFor="let btnClick of detailsClicks"
+  [ngClass]="{'normal-detail': detailsClicks.indexOf(btnClick) < 4, 'blue-detail': detailsClicks.indexOf(btnClick) > 4}"
 >
-  Add Server
-</button>
+  {{ btnClick }}
+</li>
 <p *ngIf="serverCreated">{{ serverCreationStatus }}</p>
 <app-server *ngFor="let server of servers"></app-server>

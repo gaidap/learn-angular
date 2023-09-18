@@ -8,3 +8,16 @@ label {
   width: 140px;
   margin-top: 10px;
 }
+
+.normal-detail {
+  display: inline-block;
+  width: 140px;
+  margin-top: 10px;
+}
+
+.blue-detail {
+  display: inline-block;
+  width: 140px;
+  margin-top: 10px;
+  color: blue;
+}

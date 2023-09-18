@@ -12,6 +12,8 @@ export class ServersComponent {
   serverName = '';
   serverCreated = false;
   servers = ['Testserver', 'Testserver 2'];
+  hideDetails = true;
+  detailsClicks: Date[] = [];
 
   constructor() {
     setTimeout(() => {
@@ -24,5 +26,10 @@ export class ServersComponent {
     this.serverCreated = true;
     this.servers.push(this.serverName);
     this.serverName = '';
+  }
+
+  toggleDetails() {
+    this.hideDetails = !this.hideDetails;
+    this.detailsClicks.push(new Date());
   }
 }
