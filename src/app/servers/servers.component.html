@@ -3,8 +3,8 @@
   type="text"
   class="form-control"
   [(ngModel)]="serverName"
+  placeholder="{{ 'please enter server name...' }}"
 >
-<p>{{ serverName }}</p>
 <button
   class="btn btn-primary"
   [disabled]="!allowNewServer"
@@ -12,5 +12,5 @@
 >
   Add Server
 </button>
-<p>{{ serverCreationStatus }}</p>
+<p *ngIf="serverCreated">{{ serverCreationStatus }}</p>
 <app-server></app-server>
