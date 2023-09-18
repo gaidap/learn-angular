@@ -28,10 +28,10 @@
 
 <p *ngIf="!hideDetails">{{ 'Angular Rocks' }}</p>
 <li
-  *ngFor="let btnClick of detailsClicks"
-  [ngClass]="{'normal-detail': detailsClicks.indexOf(btnClick) < 4, 'blue-detail': detailsClicks.indexOf(btnClick) > 4}"
+  *ngFor="let btnClick of detailsClicks; let i = index"
+  [ngClass]="{'normal-detail': i < 4, 'blue-detail': i > 4}"
 >
-  {{ btnClick }}
+  {{ btnClick.toISOString() }}
 </li>
 <p *ngIf="serverCreated">{{ serverCreationStatus }}</p>
 <app-server *ngFor="let server of servers"></app-server>
