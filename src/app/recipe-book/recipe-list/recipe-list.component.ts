@@ -8,6 +8,12 @@ import {Recipe} from "../model/recipe";
 })
 export class RecipeListComponent {
 
-  recipes: Recipe[] = [];
+  recipes: Recipe[] = [
+    Recipe.createRecipe(
+      'A Test Recipe',
+      'This is simply a test',
+      't.ly/bbJ5O'
+    ),
+  ];
 
 }
