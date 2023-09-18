@@ -12,7 +12,7 @@ export class RecipeListComponent {
     Recipe.createRecipe(
       'A Test Recipe',
       'This is simply a test',
-      't.ly/bbJ5O'
+      'https://t.ly/bbJ5O'
     ),
   ];
 
