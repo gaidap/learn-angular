@@ -1,5 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Recipe} from "../model/recipe";
+import {ShoppingService} from "../../shared/services/shopping.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-recipe-detail',
@@ -8,4 +10,16 @@ import {Recipe} from "../model/recipe";
 })
 export class RecipeDetailComponent {
   @Input() recipe!: Recipe;
+
+  constructor(
+    private shoppingService: ShoppingService,
+    private toastr: ToastrService
+  ) {
+  }
+
+  onAddToShoppingList(recipe: Recipe) {
+    this.shoppingService.addIngredients(recipe.ingredients);
+    this.toastr.success('Added ingredients to the shopping list.', 'Success!');
+
+  }
 }
