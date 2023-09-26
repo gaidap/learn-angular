@@ -1,0 +1,11 @@
+.col-md-12 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25vh; /* Optional: change as per your needs */
+}
+
+.col-md-12 h3 {
+  text-align: center;
+  font-weight: bolder !important;
+}

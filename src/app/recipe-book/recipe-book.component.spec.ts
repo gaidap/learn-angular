@@ -1,6 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RecipeBookComponent } from './recipe-book.component';
+import {RecipeBookComponent} from './recipe-book.component';
+import {RouterTestingModule} from "@angular/router/testing";
+import {Component} from "@angular/core";
+
+@Component({
+  selector: 'app-recipe-list',
+  template: ''
+})
+class MockRecipeListComponent {
+}
 
 describe('RecipeBookComponent', () => {
   let component: RecipeBookComponent;
@@ -8,7 +17,8 @@ describe('RecipeBookComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RecipeBookComponent]
+      imports: [RouterTestingModule], // Add RouterTestingModule here
+      declarations: [RecipeBookComponent, MockRecipeListComponent]
     });
     fixture = TestBed.createComponent(RecipeBookComponent);
     component = fixture.componentInstance;

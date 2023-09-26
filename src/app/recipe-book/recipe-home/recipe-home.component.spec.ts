@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ShoppingListEditComponent} from './shopping-list-edit.component';
+import {RecipeHomeComponent} from './recipe-home.component';
 import {RouterTestingModule} from "@angular/router/testing";
 
-describe('ShoppingListEditComponent', () => {
-  let component: ShoppingListEditComponent;
-  let fixture: ComponentFixture<ShoppingListEditComponent>;
+describe('RecipeHomeComponent', () => {
+  let component: RecipeHomeComponent;
+  let fixture: ComponentFixture<RecipeHomeComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule], // Add RouterTestingModule here
-      declarations: [ShoppingListEditComponent]
+      declarations: [RecipeHomeComponent]
     });
-    fixture = TestBed.createComponent(ShoppingListEditComponent);
+    fixture = TestBed.createComponent(RecipeHomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

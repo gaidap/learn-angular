@@ -1,13 +1,14 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Recipe} from "../model/recipe";
 import {Ingredient} from "../../shared/model/ingredient";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class RecipeService {
-  recipeSelected = new EventEmitter<Recipe>();
-
   private recipes: Recipe[] = [
     Recipe.createRecipe(
+      1,
       'Gnocchi a mozzarella i tomatá',
       'A gnocchi dish best served steaming hot.',
       'https://t.ly/bbJ5O',
@@ -19,6 +20,7 @@ export class RecipeService {
       ]
     ),
     Recipe.createRecipe(
+      2,
       'Spaghetti con broccoli arabiatta',
       'Really spicy spaghetti with tomato sauce.',
       'https://t.ly/mIEkB',
@@ -31,9 +33,15 @@ export class RecipeService {
       ]
     ),
   ];
-  constructor() { }
+
+  constructor() {
+  }
 
   getRecipes() {
     return this.recipes.slice();
+  }
+
+  getRecipe(id: number) {
+    return this.recipes.find(recipe => recipe.id === id);
   }
 }
