@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-xs-12">
-    <form>
+    <form (ngSubmit)="onAddItem(form)" #form="ngForm">
       <div class="row">
         <div class="col-sm-5 form-group">
           <label for="name">Name</label>
@@ -8,8 +8,9 @@
             type="text"
             class="form-control"
             id="name"
-            placeholder="Enter Name"
-          #nameInput>
+            name="name"
+            ngModel
+            placeholder="Enter Name">
         </div>
         <div class="col-sm-2 form-group">
           <label for="amount">Amount</label>
@@ -17,15 +18,16 @@
             type="text"
             class="form-control"
             id="amount"
-            placeholder="Enter Amount"
-          #amountInput>
+            name="amount"
+            ngModel
+            placeholder="Enter Amount">
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <button class="btn btn-success" type="submit" (click)="onAddItem()">Add</button>
+          <button class="btn btn-success" type="submit">Add</button>
           <button class="btn btn-danger" type="button" (click)="onRemoveItem($event)">Delete</button>
-          <button class="btn btn-primary" type="button" (click)="onResetForm()">Reset form</button>
+          <button class="btn btn-primary" type="button" (click)="onResetForm(form)">Reset form</button>
         </div>
       </div>
     </form>
