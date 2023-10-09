@@ -97,10 +97,21 @@ describe('RecipeEditComponent', () => {
   });
 
   it('should remove an ingredient', () => {
-    component.onRemoveIngredient();
-    // Add your assertions here
-    // There should be a way to check if the ingredient was removed.
-    // Since the provided onRemoveIngredient() function doesn't actually do anything yet, we cannot write a meaningful test for it.
+    const recipe: Recipe = Recipe.createRecipe(
+      1,
+      'Test Recipe',
+      'path/image.jpg',
+      'Test description',
+      [
+        Ingredient.createIngredient('Apple', 1),
+      ]);
+
+    recipeService.getRecipe.and.returnValue(recipe);
+    component.ngOnInit();
+    const initialLength = component.recipeForm.get('ingredients')?.value.length;
+    component.onRemoveIngredient(0);
+    const finalLength = component.recipeForm.get('ingredients')?.value.length;
+    expect(finalLength).toBeLessThan(initialLength);
   });
 
   it('should initialize the form in editMode', () => {
