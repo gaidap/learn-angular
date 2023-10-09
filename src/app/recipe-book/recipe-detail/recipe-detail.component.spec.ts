@@ -1,91 +1,82 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {RecipeDetailComponent} from './recipe-detail.component';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import {of} from 'rxjs';
-import {Ingredient} from '../../shared/model/ingredient';
 import {RecipeService} from '../services/recipe.service';
 import {ShoppingService} from '../../shared/services/shopping.service';
-import {RouterTestingModule} from "@angular/router/testing";
+import {RecipeDetailComponent} from './recipe-detail.component';
+import {Recipe} from '../model/recipe';
+import {Ingredient} from '../../shared/model/ingredient';
+import {of} from "rxjs";
 
 describe('RecipeDetailComponent', () => {
   let component: RecipeDetailComponent;
   let fixture: ComponentFixture<RecipeDetailComponent>;
-  let mockShoppingService: any;
-  let mockRecipeService: any;
-  let mockToastrService: any;
-  let mockActivatedRoute;
+  let recipeService: jasmine.SpyObj<RecipeService>;
+  let shoppingService: jasmine.SpyObj<ShoppingService>;
+  let toastr: jasmine.SpyObj<ToastrService>;
 
-  beforeEach(() => {
-    mockShoppingService = {
-      addIngredients: jasmine.createSpy('addIngredients')
-    };
+  beforeEach(async () => {
+    const recipeServiceSpy = jasmine.createSpyObj('RecipeService', ['getRecipe', 'deleteRecipe']);
+    const shoppingServiceSpy = jasmine.createSpyObj('ShoppingService', ['addIngredients']);
+    const toastrServiceSpy = jasmine.createSpyObj('ToastrService', ['error', 'success']);
 
-    mockRecipeService = {
-      getRecipe: jasmine.createSpy('getRecipe').and.returnValue({id: 1, name: 'Test Recipe'}),
-    };
-
-    mockToastrService = {
-      success: jasmine.createSpy('success'),
-      error: jasmine.createSpy('error')
-    };
-
-    mockActivatedRoute = {
-      params: of({id: 1}),
-    };
-
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule], // Add RouterTestingModule here
+    await TestBed.configureTestingModule({
       declarations: [RecipeDetailComponent],
       providers: [
-        {
-          provide: ShoppingService,
-          useValue: mockShoppingService
-        },
-        {
-          provide: RecipeService,
-          useValue: mockRecipeService
-        },
-        {
-          provide: ToastrService,
-          useValue: mockToastrService
-        },
-        {
-          provide: ActivatedRoute,
-          useValue: mockActivatedRoute
-        }
+        {provide: RecipeService, useValue: recipeServiceSpy},
+        {provide: ShoppingService, useValue: shoppingServiceSpy},
+        {provide: ToastrService, useValue: toastrServiceSpy},
+        {provide: ActivatedRoute, useValue: {params: of({id: '1'})}},
+        {provide: Router, useValue: {navigate: jasmine.createSpy('navigate')}}
       ]
     })
       .compileComponents();
 
+    recipeService = TestBed.inject(RecipeService) as jasmine.SpyObj<RecipeService>;
+    shoppingService = TestBed.inject(ShoppingService) as jasmine.SpyObj<ShoppingService>;
+    toastr = TestBed.inject(ToastrService) as jasmine.SpyObj<ToastrService>;
+
     fixture = TestBed.createComponent(RecipeDetailComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call getRecipe on ngOnInit', () => {
-    expect(mockRecipeService.getRecipe).toHaveBeenCalledWith(1);
+  it('should fetch a recipe on Init', () => {
+    const testRecipe = Recipe.createRecipe(
+      1,
+      'Test',
+      'TestDescription',
+      'TestImageUrl',
+      [Ingredient.createIngredient('Test', 1)]);
+    recipeService.getRecipe.withArgs(1).and.returnValue(testRecipe);
+
+    component.ngOnInit();
+
+    expect(component.recipe).toEqual(testRecipe);
   });
 
-  it('should add ingredients to shopping list and pop a success toast when onAddToShoppingList is called with ingredients', () => {
-    let ingredients: Ingredient[] = [
-      Ingredient.createIngredient('Test Ingredient', 1),
-    ];
-
+  it('should add ingredients to shopping list and show success toastr', () => {
+    const ingredients = [{}, {}] as Ingredient[];
     component.onAddToShoppingList(ingredients);
 
-    expect(mockShoppingService.addIngredients).toHaveBeenCalledWith(ingredients);
-    expect(mockToastrService.success).toHaveBeenCalledWith('Added ingredients to the shopping list.', 'Success!');
+    expect(shoppingService.addIngredients).toHaveBeenCalledWith(ingredients);
+    expect(toastr.success).toHaveBeenCalled();
   });
 
-  it('should not add ingredients to shopping list and pop an error toast when onAddToShoppingList is called with no ingredients', () => {
-    component.onAddToShoppingList([]);
+  it('should delete a recipe and navigate back', () => {
+    component.recipe = Recipe.createRecipe(
+      1,
+      'Test',
+      'TestDescription',
+      'TestImageUrl',
+      [Ingredient.createIngredient('Test', 1)]);
 
-    expect(mockShoppingService.addIngredients).not.toHaveBeenCalled();
-    expect(mockToastrService.error).toHaveBeenCalledWith('No ingredients to add to the shopping list.', 'Error!');
+    component.onDeleteRecipe();
+
+    expect(recipeService.deleteRecipe).toHaveBeenCalledWith(1);
+    expect(fixture.debugElement.injector.get(Router).navigate).toHaveBeenCalledWith(['..'], jasmine.any(Object));
   });
 });

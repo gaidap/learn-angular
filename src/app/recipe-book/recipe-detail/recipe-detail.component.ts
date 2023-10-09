@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Recipe} from "../model/recipe";
 import {ShoppingService} from "../../shared/services/shopping.service";
 import {ToastrService} from "ngx-toastr";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeService} from "../services/recipe.service";
 import {Ingredient} from "../../shared/model/ingredient";
 
@@ -18,6 +18,7 @@ export class RecipeDetailComponent implements OnInit {
     private shoppingService: ShoppingService,
     private recipeService: RecipeService,
     private route: ActivatedRoute,
+    private router: Router,
     private toastr: ToastrService,
   ) {
   }
@@ -36,5 +37,10 @@ export class RecipeDetailComponent implements OnInit {
     this.shoppingService.addIngredients(ingredients);
     this.toastr.success('Added ingredients to the shopping list.', 'Success!');
 
+  }
+
+  onDeleteRecipe() {
+    this.recipeService.deleteRecipe(this.recipe!.id);
+    this.router.navigate(['..'], {relativeTo: this.route});
   }
 }

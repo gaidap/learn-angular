@@ -53,16 +53,26 @@ describe('RecipeService', () => {
     service.addRecipe(dummyRecipe);
 
     const updatedRecipe = Recipe.createRecipe(
-      1, // same id as dummyRecipe
+      3, // same id as dummyRecipe
       'Updated Test Recipe',
       'This is simply a test - updated',
       'https://via.placeholder.com/150',
       [Ingredient.createIngredient('Test', 1)]
     );
 
-    service.updateRecipe(1, updatedRecipe);
+    service.updateRecipe(3, updatedRecipe);
 
-    expect(service.getRecipes().find(recipe => recipe.id === 1)).toEqual(updatedRecipe);
+    expect(service.getRecipes().find(recipe => recipe.id === 3)).toEqual(updatedRecipe);
+  });
+
+  // Test for 'deleteRecipe' method
+  it('deleteRecipe should remove the recipe if it exists', () => {
+    // First, add a recipe to be updated
+    service.addRecipe(dummyRecipe);
+
+    service.deleteRecipe(3);
+
+    expect(service.getRecipes().find(recipe => recipe.id === 3)).toEqual(undefined);
   });
 
   describe('getRecipes', () => {
