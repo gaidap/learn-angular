@@ -13,4 +13,14 @@ export class Recipe {
   static createRecipe(id: number, name: string, description: string, imagePath: string, ingredients: Ingredient[] = []) {
     return new Recipe(id, name, description, imagePath, ingredients);
   }
+
+  toObject() {
+    return {
+      id: this.id,
+      name: this.name,
+      imagePath: this.imagePath,
+      description: this.description,
+      ingredients: this.ingredients.map(ingredient => ingredient.toObject()),
+    };
+  }
 }

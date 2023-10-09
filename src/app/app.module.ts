@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms'; // <-- Import FormsModule
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'; // <-- Import FormsModule
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {AppComponent} from './app.component';
@@ -32,18 +32,19 @@ import {NgOptimizedImage} from "@angular/common";
     RecipeEditComponent,
     RecipeHomeComponent,
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        ToastrModule.forRoot({
-            timeOut: 10000,
-            positionClass: 'toast-bottom-right',
-            preventDuplicates: true,
-        }),
-        FormsModule, // <-- Include module in our AppModules
-        AppRoutingModule,
-        NgOptimizedImage,
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
+    ReactiveFormsModule,
+    FormsModule, // <-- Include module in our AppModules
+    AppRoutingModule,
+    NgOptimizedImage,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

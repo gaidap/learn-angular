@@ -73,7 +73,7 @@ describe('RecipeDetailComponent', () => {
 
   it('should add ingredients to shopping list and pop a success toast when onAddToShoppingList is called with ingredients', () => {
     let ingredients: Ingredient[] = [
-      {name: 'Test Ingredient', amount: 1}
+      Ingredient.createIngredient('Test Ingredient', 1),
     ];
 
     component.onAddToShoppingList(ingredients);

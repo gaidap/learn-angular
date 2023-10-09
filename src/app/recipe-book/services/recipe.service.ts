@@ -41,7 +41,11 @@ export class RecipeService {
     return this.recipes.slice();
   }
 
-  getRecipe(id: number) {
+  getRecipe(id?: number) {
+    if (!id) {
+      return undefined;
+    }
+
     return this.recipes.find(recipe => recipe.id === id);
   }
 }
