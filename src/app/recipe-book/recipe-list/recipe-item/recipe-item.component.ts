@@ -7,7 +7,7 @@ import {Recipe} from "../../model/recipe";
   styleUrls: ['./recipe-item.component.css']
 })
 export class RecipeItemComponent {
-  @Input() recipe!: Recipe;
+  @Input() recipe?: Recipe;
 
   constructor() {
   }
