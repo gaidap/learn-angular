@@ -1,0 +1,12 @@
+.btn {
+  margin: 10px;
+}
+
+.ingredient .row {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.col-xs-2 .btn {
+  margin: 0px;
+}
