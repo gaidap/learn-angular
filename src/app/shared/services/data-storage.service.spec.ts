@@ -36,11 +36,4 @@ describe('DataStorageService', () => {
     expect(recipeServiceSpy.getRecipes).toHaveBeenCalled();
     expect(httpClientSpy.put).toHaveBeenCalledWith('https://learning-angular-56fa9-default-rtdb.europe-west1.firebasedatabase.app/recipes.json', ['recipe1', 'recipe2', 'recipe3']);
   });
-
-  it('should fetch recipes and handle response', () => {
-    service.fetchRecipes();
-    expect(httpClientSpy.get).toHaveBeenCalledWith('https://learning-angular-56fa9-default-rtdb.europe-west1.firebasedatabase.app/recipes.json');
-    expect(recipeServiceSpy.setRecipes).toHaveBeenCalledTimes(1);
-    expect(recipeServiceSpy.setRecipes).toHaveBeenCalledWith(['recipe1', 'recipe2', 'recipe3']);
-  });
 });

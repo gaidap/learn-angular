@@ -8,6 +8,7 @@ import {RecipeService} from '../services/recipe.service';
 import {Recipe} from '../model/recipe';
 import {Ingredient} from "../../shared/model/ingredient";
 import {RouterTestingModule} from "@angular/router/testing";
+import {recipeToObject} from "../model/recipe.transformer";
 
 
 describe('RecipeEditComponent', () => {
@@ -126,7 +127,7 @@ describe('RecipeEditComponent', () => {
 
     recipeService.getRecipe.and.returnValue(recipe);
     component.ngOnInit();
-    expect(component.recipeForm.value).toEqual(recipe.toObject());
+    expect(component.recipeForm.value).toEqual(recipeToObject(recipe));
   });
 
   it('should initialize an empty form not in editMode', () => {

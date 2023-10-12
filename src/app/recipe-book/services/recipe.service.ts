@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Recipe} from "../model/recipe";
 import {Ingredient} from "../../shared/model/ingredient";
 import {Subject} from "rxjs";
+import {recipeFixtures} from "../../shared/fixtures/recipe.fixtures";
 
 @Injectable({
   providedIn: 'root'

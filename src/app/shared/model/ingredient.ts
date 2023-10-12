@@ -5,11 +5,4 @@ export class Ingredient {
   static createIngredient(name: string, amount: number): Ingredient {
     return new Ingredient(name, amount);
   }
-
-  toObject() {
-    return {
-      name: this.name,
-      amount: this.amount,
-    };
-  }
 }
