@@ -9,10 +9,7 @@ export class ShoppingService {
   ingredientsChanged = new Subject<Ingredient[]>();
   startedEditing = new Subject<number>();
 
-  private ingredients: Ingredient[] = [
-    Ingredient.createIngredient('Apples', 5),
-    Ingredient.createIngredient('Tomatoes', 10),
-  ];
+  private ingredients: Ingredient[] = [];
 
   constructor() {
   }
