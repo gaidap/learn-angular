@@ -17,6 +17,7 @@ import {RecipeEditComponent} from './recipe-book/recipe-edit/recipe-edit.compone
 import {AppRoutingModule} from "./app-routing/app-routing.module";
 import {RecipeHomeComponent} from './recipe-book/recipe-home/recipe-home.component';
 import {NgOptimizedImage} from "@angular/common";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -35,15 +36,16 @@ import {NgOptimizedImage} from "@angular/common";
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgOptimizedImage,
     ToastrModule.forRoot({
       timeOut: 10000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
-    ReactiveFormsModule,
-    FormsModule, // <-- Include module in our AppModules
     AppRoutingModule,
-    NgOptimizedImage,
   ],
   bootstrap: [AppComponent]
 })

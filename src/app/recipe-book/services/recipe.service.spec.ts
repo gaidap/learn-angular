@@ -3,6 +3,7 @@ import {RecipeService} from './recipe.service';
 import {ShoppingService} from "../../shared/services/shopping.service";
 import {Recipe} from "../model/recipe";
 import {Ingredient} from "../../shared/model/ingredient";
+import {recipeFixtures} from "../../shared/fixtures/recipe.fixtures";
 
 describe('RecipeService', () => {
   let service: RecipeService;
@@ -47,6 +48,12 @@ describe('RecipeService', () => {
     expect(service.getRecipes().includes(dummyRecipe)).toBeTrue();
   });
 
+  // Test for 'setRecipes' method
+  it('setRecipes should overwrite the recipes', () => {
+    service.setRecipes([dummyRecipe]);
+    expect(service.getRecipes().includes(dummyRecipe)).toBeTrue();
+  });
+
   // Test for 'updateRecipe' method
   it('updateRecipe should update the recipe if it exists', () => {
     // First, add a recipe to be updated
@@ -77,6 +84,7 @@ describe('RecipeService', () => {
 
   describe('getRecipes', () => {
     it('should return all recipes', () => {
+      service.setRecipes(recipeFixtures)
       const recipes = service.getRecipes();
       expect(recipes.length).toBe(2);
       expect(recipes[0].name).toBe('Gnocchi a mozzarella i tomatá');
@@ -86,6 +94,7 @@ describe('RecipeService', () => {
 
   describe('getRecipe', () => {
     it('should return a single recipe by id', () => {
+      service.setRecipes(recipeFixtures)
       const recipe = service.getRecipe(1);
       expect(recipe?.name).toBe('Gnocchi a mozzarella i tomatá');
 

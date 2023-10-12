@@ -7,33 +7,7 @@ import {Subject} from "rxjs";
   providedIn: 'root'
 })
 export class RecipeService {
-  private recipes: Recipe[] = [
-    Recipe.createRecipe(
-      1,
-      'Gnocchi a mozzarella i tomatá',
-      'A gnocchi dish best served steaming hot.',
-      'https://t.ly/bbJ5O',
-      [
-        Ingredient.createIngredient('Mozzarella', 3),
-        Ingredient.createIngredient('Garlic', 2),
-        Ingredient.createIngredient('Tomatoes', 5),
-        Ingredient.createIngredient('Gnocchi', 2),
-      ]
-    ),
-    Recipe.createRecipe(
-      2,
-      'Spaghetti con broccoli arabiatta',
-      'Really spicy spaghetti with tomato sauce.',
-      'https://t.ly/mIEkB',
-      [
-        Ingredient.createIngredient('Broccoli', 2),
-        Ingredient.createIngredient('Spaghetti', 1),
-        Ingredient.createIngredient('Garlic', 2),
-        Ingredient.createIngredient('Jalapenos', 5),
-        Ingredient.createIngredient('Tomatoes', 5),
-      ]
-    ),
-  ];
+  private recipes: Recipe[] = [];
 
   recipesChanged = new Subject<Recipe[]>();
 
@@ -42,6 +16,11 @@ export class RecipeService {
 
   getRecipes() {
     return this.recipes.slice();
+  }
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
   }
 
   getRecipe(id?: number) {
