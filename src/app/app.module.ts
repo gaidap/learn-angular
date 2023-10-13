@@ -18,6 +18,8 @@ import {AppRoutingModule} from "./app-routing/app-routing.module";
 import {RecipeHomeComponent} from './recipe-book/recipe-home/recipe-home.component';
 import {NgOptimizedImage} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
+import {AuthComponent} from './auth/auth/auth.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import {HttpClientModule} from "@angular/common/http";
     DropdownDirective,
     RecipeEditComponent,
     RecipeHomeComponent,
+    AuthComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
