@@ -19,7 +19,7 @@ export interface AuthResponseData {
 })
 export class AuthService {
   private API_KEY = API_KEY;
-  user = new BehaviorSubject<User|null>(null);
+  user = new BehaviorSubject<User | null>(null);
 
   constructor(private http: HttpClient) {
   }
@@ -100,5 +100,9 @@ export class AuthService {
 
   private currentDate() {
     return new Date();
+  }
+
+  logout() {
+    this.user.next(null);
   }
 }
