@@ -52,7 +52,9 @@ import {AuthInterceptor} from "./auth/auth/interceptor/auth.interceptor";
     }),
     AppRoutingModule,
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
