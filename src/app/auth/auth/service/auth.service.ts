@@ -19,8 +19,11 @@ export interface AuthResponseData {
   providedIn: 'root'
 })
 export class AuthService {
-  private API_KEY = API_KEY;
   user = new BehaviorSubject<User | null>(null);
+
+  private API_KEY = API_KEY;
+  private localsStorageKey = 'userData';
+  private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -39,6 +42,44 @@ export class AuthService {
       email,
       password
     );
+  }
+
+  autoLogin() {
+    const userData: {
+      email: string,
+      id: string,
+      _token: string,
+      _tokenExpirationDate: string,
+    } = JSON.parse(localStorage.getItem(this.localsStorageKey) ?? '{}');
+
+    if (!userData) {
+      return;
+    }
+
+    const user: User = new User(
+      userData.email,
+      userData.id,
+      userData._token,
+      new Date(userData._tokenExpirationDate),
+    );
+
+    if (!user.token) {
+      return;
+    }
+
+    if (user.tokenExpirationDate <= this.currentDate()) {
+      return;
+    }
+
+    this.user.next(user);
+    const expirationInMillis = user.tokenExpirationDate.getTime() - this.currentDate().getTime();
+    this.autoLogout(expirationInMillis);
+  }
+
+  autoLogout(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout(); // TODO: Implement a refresh mechanism to avoid logout.
+    }, expirationDuration);
   }
 
   private getAuthRequestObservable(authAction: string, email: string, password: string) {
@@ -89,6 +130,9 @@ export class AuthService {
     const expirationDate = this.getExpirationDate(expiresInSeconds);
     const user = new User(email, localId, idToken, expirationDate);
     this.user.next(user);
+    const expirationInMillis = expiresInSeconds * 1000;
+    this.autoLogout(expirationInMillis);
+    localStorage.setItem(this.localsStorageKey, JSON.stringify(user));
   }
 
   private getExpirationDate(expiresInSeconds: number) {
@@ -106,5 +150,10 @@ export class AuthService {
   logout() {
     this.user.next(null);
     this.router.navigate(['/auth']);
+    localStorage.removeItem(this.localsStorageKey);
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+      this.tokenExpirationTimer = null;
+    }
   }
 }
