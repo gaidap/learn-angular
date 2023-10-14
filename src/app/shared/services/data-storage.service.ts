@@ -9,7 +9,10 @@ import {map, tap} from "rxjs";
 })
 export class DataStorageService {
 
-  constructor(private http: HttpClient, private recipeService: RecipeService) {
+  constructor(
+    private http: HttpClient,
+    private recipeService: RecipeService,
+  ) {
   }
 
   storeRecipes() {
@@ -34,7 +37,8 @@ export class DataStorageService {
   fetchRecipes() {
     return this.http.get<Recipe[]>(
       'https://learning-angular-56fa9-default-rtdb.europe-west1.firebasedatabase.app/recipes.json'
-    ).pipe(map(
+    ).pipe(
+      map(
         recipes => {
           return recipes.map(recipe => {
             return {...recipe, ingredients: recipe.ingredients ? recipe.ingredients : []};
@@ -46,7 +50,6 @@ export class DataStorageService {
           console.log(recipes);
           this.recipeService.setRecipes(recipes);
         }
-      ),
-    );
+      ));
   }
 }
