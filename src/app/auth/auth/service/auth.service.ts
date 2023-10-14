@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {catchError, throwError} from "rxjs";
+import {API_KEY} from "./api-key";
 
 export interface AuthResponseData {
   kind: string,
@@ -16,7 +17,7 @@ export interface AuthResponseData {
   providedIn: 'root'
 })
 export class AuthService {
-  private API_KEY = '**REMOVED**';
+  private API_KEY = API_KEY;
 
   constructor(private http: HttpClient) {
   }
