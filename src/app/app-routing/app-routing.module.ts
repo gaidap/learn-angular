@@ -9,7 +9,7 @@ import {RecipesResolverService} from "../recipe-book/services/recipes-resolver.s
 import {AuthComponent} from "../auth/auth/auth.component";
 
 const appRoutes: Routes = [
-  {path: '', redirectTo: '/recipes', pathMatch: 'full'},
+  {path: '', redirectTo: 'auth', pathMatch: 'full'},
   {
     path: 'recipes', component: RecipeBookComponent, children: [
       {path: '', component: RecipeHomeComponent, pathMatch: 'full'},

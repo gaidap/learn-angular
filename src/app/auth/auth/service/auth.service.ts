@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {catchError, throwError} from "rxjs";
+import {catchError, Subject, tap, throwError} from "rxjs";
 import {API_KEY} from "./api-key";
+import {User} from "../model/user.model";
 
 export interface AuthResponseData {
   kind: string,
@@ -18,6 +19,7 @@ export interface AuthResponseData {
 })
 export class AuthService {
   private API_KEY = API_KEY;
+  user = new Subject<User>()
 
   constructor(private http: HttpClient) {
   }
@@ -47,16 +49,28 @@ export class AuthService {
       }
     ).pipe(catchError(error => {
       return this.handleError(error, email);
-    }));
+    }), tap(
+      (response) => {
+        this.handleAuthentication(response.email, response.localId, response.idToken, +response.expiresIn);
+      }
+    ));
   }
 
   private handleError(error: any, email: string) {
     console.error(error);
     if (!error.error || !error.error.error) {
-      return throwError(() => new Error("An unknown error occurred!"));
+      return throwError(this.getErrorFactory("An unknown error occurred!"));
     }
 
-    switch (error.error.error.message) {
+    return this.getErrorFromErrorMessageCode(error.error.error.message, email);
+  }
+
+  private getErrorFactory(errorMessage: string) {
+    return () => new Error(errorMessage);
+  }
+
+  private getErrorFromErrorMessageCode(errorMessage: string, email: string) {
+    switch (errorMessage) {
       case 'EMAIL_EXISTS':
         return throwError(() => new Error(`The email address "${email}" already exists.`));
       case 'INVALID_EMAIL':
@@ -66,7 +80,25 @@ export class AuthService {
       case 'USER_DISABLED':
         return throwError(() => new Error(`The user account with the email "${email}" has been disabled by an administrator.`));
       default:
-        return throwError(() => new Error(error.error.error.message));
+        return throwError(() => new Error(errorMessage));
     }
+  }
+
+  private handleAuthentication(email: string, localId: string, idToken: string, expiresInSeconds: number) {
+    const expirationDate = this.getExpirationDate(expiresInSeconds);
+    const user = new User(email, localId, idToken, expirationDate);
+    this.user.next(user);
+  }
+
+  private getExpirationDate(expiresInSeconds: number) {
+    return new Date(this.calculateExpirationInMillis(expiresInSeconds));
+  }
+
+  private calculateExpirationInMillis(expiresInSeconds: number) {
+    return this.currentDate().getTime() + expiresInSeconds * 1000;
+  }
+
+  private currentDate() {
+    return new Date();
   }
 }
