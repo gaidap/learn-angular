@@ -67,4 +67,8 @@ export class AuthComponent {
   checkPasswordMatch() {
     this.passwordMismatch = this.password !== this.confirmPassword;
   }
+
+  onDismissError() {
+    this.errorMsg = '';
+  }
 }
