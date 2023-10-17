@@ -5,10 +5,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
 import {AppRoutingModule} from "./app-routing/app-routing.module";
-import {RecipeBookModule} from "./recipe-book/recipe-book.module";
-import {ShoppingListModule} from "./shopping-list/shopping-list.module";
-import {AuthModule} from "./auth/auth.module";
 import {SharedModule} from "./shared/shared.module";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {AuthInterceptor} from "./auth/interceptor/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -19,11 +18,10 @@ import {SharedModule} from "./shared/shared.module";
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    AuthModule,
     SharedModule,
-    RecipeBookModule,
-    ShoppingListModule,
+    HttpClientModule,
   ],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule {
