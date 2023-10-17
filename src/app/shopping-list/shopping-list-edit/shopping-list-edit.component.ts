@@ -49,7 +49,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   }
 
   onRemoveItem(index?: number) {
-    if (!index) {
+    if (index == undefined || index < 0) {
       return;
     }
 
