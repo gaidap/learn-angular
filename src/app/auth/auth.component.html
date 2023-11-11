@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <app-alert [message]="errorMsg" *ngIf="errorMsg" (close)="onDismissError()"></app-alert>
+    <div class="loading-spinner-wrapper">
+      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    </div>
+    <form #form="ngForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+      <div class="form-group">
+        <label for="email"></label>
+        <input
+          class="form-control"
+          id="email"
+          placeholder="Email"
+          type="email"
+          name="email"
+          ngModel
+          required
+          email>
+      </div>
+      <div class="form-group">
+        <label for="password"></label>
+        <input
+          class="form-control"
+          id="password"
+          placeholder="Password"
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+          minlength="8">
+      </div>
+      <div class="form-group">
+        <label for="confirm-password"></label>
+        <input
+          class="form-control"
+          id="confirm-password"
+          placeholder="Retype Password"
+          name="confirm-password"
+          [(ngModel)]="confirmPassword"
+          (ngModelChange)="checkPasswordMatch()"
+          type="password"
+          required
+          minlength="8"
+        *ngIf="!isSignInMode">
+      </div>
+      <!-- Password match error message -->
+      <div class="alert alert-danger text-danger password-mismatch" *ngIf="passwordMismatch">
+        Passwords do not match.
+      </div>
+      <button [disabled]="form.invalid || passwordMismatch" class="btn btn-primary" type="submit">{{isSignInMode ? "Sign In" : "Sign Up"}}</button>
+      |
+      <button class="btn btn-default" type="button"
+              (click)="onSwitchMode()">{{!isSignInMode ? "Sign In" : "Sign Up"}}</button>
+    </form>
+  </div>
+</div>

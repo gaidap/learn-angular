@@ -1,1 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
+@import "node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+/* ### Styles for ngx-toastr ### */
+.toast-container {
+  position: fixed !important;
+  top: 5vh !important;
+  right: 5vh !important;
+  background-image: linear-gradient(green, greenyellow) !important;
+  border-radius: 22px !important;
+  width: 15vw !important;
+  box-shadow: -5px 8px 16px 0px rgba(0, 0, 0, 0.3) !important;
+  margin-bottom: 2px !important;
+}
+
+.toast-container .toast {
+  margin: 2px !important;
+  box-shadow: none !important;
+  border-radius: 20px !important;
+  background-color: #fff !important;
+}
+
+.toast-success {
+  background-image: none !important;
+}
+
+.toast-success::after {
+  content: '\f00c' !important;
+  font-family: 'FontAwesome', serif !important;
+  position: absolute !important;
+  top: 14px !important;
+  left: 15px !important;
+  color: #333 !important;
+  font-size: 1.5em !important;
+}
+
+.toast-title {
+  color: black !important;
+  font-size: 16px !important;
+  margin: 15px !important;
+  padding-top: 5px !important;
+}
+
+.toast-message {
+  margin: 15px !important;
+  color: #333333 !important;
+  padding-bottom: 5px !important;
+}
